@@ -81,9 +81,6 @@ if(NOT TRACY_STATIC)
     target_compile_definitions(TracyClient PUBLIC TRACY_IMPORTS)
 endif()
 
-include(CMakePackageConfigHelpers)
-include(GNUInstallDirs)
-
 set(tracy_includes
     ${TRACY_PUBLIC_DIR}/tracy/TracyC.h
     ${TRACY_PUBLIC_DIR}/tracy/Tracy.hpp
@@ -129,19 +126,3 @@ set(common_includes
     ${TRACY_PUBLIC_DIR}/common/TracySystem.hpp
     ${TRACY_PUBLIC_DIR}/common/TracyUwp.hpp
     ${TRACY_PUBLIC_DIR}/common/TracyYield.hpp)
-
-install(TARGETS TracyClient
-        EXPORT TracyConfig
-        RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES ${tracy_includes}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/tracy)
-install(FILES ${client_includes}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/client)
-install(FILES ${common_includes}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/common)
-install(EXPORT TracyConfig
-        NAMESPACE Tracy::
-        FILE TracyConfig.cmake
-        DESTINATION share/Tracy)
